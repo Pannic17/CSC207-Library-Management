@@ -178,7 +178,7 @@ public class Operation {
         System.out.println("Request Book...1");
         System.out.println("Return Book...2");
         System.out.println("Extend date...3");
-        System.out.println("Remove waitlist...4");
+        System.out.println("Remove waitList...4");
         System.out.println("Exit...5");
 
         while (true){
@@ -346,7 +346,7 @@ public class Operation {
     }
 
     private void operate_book(Book book_o){
-        //checkout or waitlist the Book
+        //checkout or waitList the Book
         if (book_o.availability()){
             checkout_book(book_o);
         }else {
@@ -377,13 +377,13 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         Member user_w = this.temp_user;
-        System.out.println("The Book is unavailable, do you want to join the waitlist");
+        System.out.println("The Book is unavailable, do you want to join the waitList");
         yes_no();
         int choice = scan.nextInt();
         if (choice == 1) {
             book_w.addWaitList(user_w);
-            user_w.setWaitlist(book_w);
-            System.out.println("Successfully waitlist");
+            user_w.setWaitList(book_w);
+            System.out.println("Successfully waitList");
             member_memu();
         } else {
             member_memu();
@@ -421,7 +421,7 @@ public class Operation {
         Member user_r = this.temp_user;
         for (Tuple book_c : this.temp_user.checkout){
             book_c.book.removeCheckout(user_r);
-            user_r.remove_checkout(book_r);
+            user_r.removeCheckout(book_r);
             System.out.println("Successfully returned");
             member_memu();
         }
@@ -470,7 +470,7 @@ public class Operation {
                     break;
                 }else {
                     Member user_m = (Member) user_p;
-                    user_m.pay_penalty();
+                    user_m.payPenalty();
                     System.out.println("Successfully paid the penalty");
                     staff_menu();
                 }
@@ -486,9 +486,9 @@ public class Operation {
     }
 
     private void member_waitlist(){
-        //return the waitlist availability
+        //return the waitList availability
         System.out.println("Waitlist Book availability list: ");
-        for (Book book_w : this.temp_user.waitlist){
+        for (Book book_w : this.temp_user.waitList){
             String available = available(book_w);
             System.out.println(book_w.getTitle()+available);
         }
@@ -505,7 +505,7 @@ public class Operation {
 
     private void member_penalty(){
         //calculate and show penalty of the User
-        this.temp_user.cal_penalty();
+        this.temp_user.calPenalty();
         double penalty = this.temp_user.getPenalty();
         System.out.println("Your penalty is : $"+penalty);
     }
@@ -513,23 +513,23 @@ public class Operation {
     private void member_due(){
         //show a message of Book due
         System.out.println("These books are due within next 2 Days:");
-        ArrayList<String> within = this.temp_user.book_within();
+        ArrayList<String> within = this.temp_user.bookWithin();
         for (String book_title : within){
             System.out.println(book_title);
         }
         System.out.println("These books have already past due:");
-        ArrayList<String> due = this.temp_user.book_due();
+        ArrayList<String> due = this.temp_user.bookDue();
         for (String book_title : due){
             System.out.println(book_title);
         }
     }
 
     private void remove_waitlist(){
-        //remove from waitlist
+        //remove from waitList
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         Member user_w = this.temp_user;
-        System.out.println("Please enter the Book you want to remove from waitlist");
+        System.out.println("Please enter the Book you want to remove from waitList");
         String book_title = scan.next();
         if (waitlistSearch(book_title)){
             Book book_w = this.temp_book;
@@ -537,8 +537,8 @@ public class Operation {
             int choice = scan.nextInt();
             if (choice == 1) {
                 book_w.removeWaitList(user_w);
-                user_w.remove_waitlist(book_w);
-                System.out.println("Successfully removed from waitlist");
+                user_w.removeWaitlist(book_w);
+                System.out.println("Successfully removed from waitList");
                 member_memu();
             } else {
                 member_memu();
@@ -551,7 +551,7 @@ public class Operation {
 
     private boolean waitlistSearch (String bookTitle){
         Member user_s = this.temp_user;
-        for (Book books : user_s.waitlist){
+        for (Book books : user_s.waitList){
             String title = books.getTitle();
             if (title.equals(bookTitle)){
                 return true;
