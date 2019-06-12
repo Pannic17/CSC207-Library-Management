@@ -52,7 +52,7 @@ public class Member extends User {
 
     private Tuple remove_checkout_helper (Book book_title){
         for (Tuple info : this.checkout){
-            if (info.rent_book.equals(book_title)){
+            if (info.book.equals(book_title)){
                 return info;
             }
         }
@@ -73,7 +73,7 @@ public class Member extends User {
         for (Tuple info : this.checkout){
             int days_due = info.dates.checkoutLimit - info.dates.getDaysPast();
             if ((days_due <= 2)&&(days_due >=0)){
-                String title = info.rent_book.getTitle();
+                String title = info.book.getTitle();
                 books.add(title);
             }
         }
@@ -85,7 +85,7 @@ public class Member extends User {
         for (Tuple info : this.checkout){
             int days_due = info.dates.checkoutLimit - info.dates.getDaysPast();
             if (days_due < 0){
-                String title = info.rent_book.getTitle();
+                String title = info.book.getTitle();
                 books.add(title);
             }
         }

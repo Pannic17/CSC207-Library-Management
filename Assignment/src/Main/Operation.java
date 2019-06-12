@@ -409,7 +409,7 @@ public class Operation {
         //search checklist
         Member user_s = this.temp_user;
         for (Tuple info : user_s.checkout){
-            String title = info.rent_book.getTitle();
+            String title = info.book.getTitle();
             if (title.equals(bookTitle)){
                 return true;
             }
@@ -420,7 +420,7 @@ public class Operation {
     private void return_book_helper(Book book_r){
         Member user_r = this.temp_user;
         for (Tuple book_c : this.temp_user.checkout){
-            book_c.rent_book.removeCheckout(user_r);
+            book_c.book.removeCheckout(user_r);
             user_r.remove_checkout(book_r);
             System.out.println("Successfully returned");
             member_memu();
@@ -443,7 +443,7 @@ public class Operation {
 
     private void extend_date_helper(Book book_e){
         for (Tuple book_c : this.temp_user.checkout){
-            if (book_e.equals(book_c.rent_book)){
+            if (book_e.equals(book_c.book)){
                 boolean waitlist_sit = book_e.sitWaitList();
                 if (book_c.dates.extension(waitlist_sit)){
                     System.out.println("Successfully extended");
