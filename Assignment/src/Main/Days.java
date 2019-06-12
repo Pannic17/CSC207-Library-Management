@@ -15,15 +15,16 @@ class Days {
     }
 
     private void calDays(){
+        //calculate days past
         LocalDate today = LocalDate.now();
         long days = ChronoUnit.DAYS.between(this.localDate, today);
         this.daysPast = (int) days;
     }
 
-    boolean extension(boolean waitlist){
+    boolean extension(boolean waitList){
         //return true and extend the due due time to 28 Days if extension available, otherwise return false.
         this.calDays();
-        if (waitlist&&this.checkoutLimit <=14&&this.daysPast <=14){
+        if (waitList&&this.checkoutLimit <=14&&this.daysPast <=14){
             this.checkoutLimit = 28;
             return true;
         }else{
@@ -32,6 +33,7 @@ class Days {
     }
 
     int getDaysPast(){
+        //return days past
         this.calDays();
         return this.daysPast;
     }

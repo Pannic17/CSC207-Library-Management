@@ -81,6 +81,8 @@ class Book {
     boolean availability(){
         //check whether the Book is available, return true if available
         int checkoutNum = this.checkoutList.size();
+        //if copies available > 0 and checkout number < available number,return true
+        //in this case copiesAvl may be 0, the warning can be ignored
         return ((checkoutNum < this.copiesAvl)&&(this.copiesAvl > 0));
     }
 }
