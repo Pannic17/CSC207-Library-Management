@@ -3,7 +3,7 @@ package Main;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Days {
+class Days {
 
     public LocalDate checkout_date;
     public int days_past;

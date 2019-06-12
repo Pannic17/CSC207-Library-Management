@@ -16,8 +16,8 @@ public class User {
     }
 
     public void set_type (String type){
-        //set User type for User, can only be "Staff" or "Member"
-        if (type.equals("Staff")||type.equals("Member")){
+        //set User type for User, can only be "staff" or "Member"
+        if (type.equals("staff")||type.equals("Member")){
             this.user_type = type;
         }else{
             this.user_type = "null";
@@ -30,7 +30,7 @@ public class User {
     }
 
     public String get_type (){
-        //return Main.User type for Main.User, can only be "Staff" or "Member"
+        //return Main.User type for Main.User, can only be "staff" or "Member"
         return this.user_type;
     }
 }

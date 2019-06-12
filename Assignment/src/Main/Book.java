@@ -2,93 +2,85 @@ package Main;
 
 import java.util.ArrayList;
 
-public class Book {
+class Book {
     String title;
     private String description;
-    private int copies_avl;
+    private int copiesAvl;
     private String location;
-    private ArrayList<Member> waitlist;
-    private ArrayList<Member> checkout_list;
+    private ArrayList<Member> waitList;
+    private ArrayList<Member> checkoutList;
 
     Book(String title){
         this.title = title;
-        this.waitlist = new ArrayList<>();
-        this.checkout_list = new ArrayList<>();
-        this.copies_avl = 0;
+        this.waitList = new ArrayList<>();
+        this.checkoutList = new ArrayList<>();
+        this.copiesAvl = 0;
     }
 
-    void alt_title(String title){
+    void setTitle(String title){
         //change the title of the Book
         this.title = title;
     }
 
-    public String get_title (){
+    String getTitle(){
         return this.title;
     }
-    
-    public void alt_description (String description){
+
+    void setDescription(String description){
         //change the description of the Book
         this.description =  description;
     }
 
-    public String get_description (){
+    String getDescription(){
         return this.description;
     }
 
-    public void alt_copies_avl (int copies){
+    void setCopiesAvl(int copies){
         //change the copies of available
-        this.copies_avl = copies;
+        this.copiesAvl = copies;
     }
 
-    public int get_copies_avl (){
-        return this.copies_avl;
+    int getCopiesAvl(){
+        return this.copiesAvl;
     }
 
-    public void alt_location (String location){
+    void setLocation(String location){
         //change the location of the Book
         this.location = location;
     }
 
-    public String get_location (){
+    String getLocation(){
         return this.location;
     }
 
-    public void add_waitlist (Member person){
+    void addWaitList(Member person){
         //add a Member to the waitList
-        this.waitlist.add(person);
+        this.waitList.add(person);
     }
 
-    public void remove_waitlist (Member person){
+    void removeWaitList(Member person){
         //remove a Member from the waitList
-        this.waitlist.remove(person);
+        this.waitList.remove(person);
     }
 
-    public ArrayList get_waitlist (){
-        return this.waitlist;
-    }
-
-    public void add_checkout (Member person){
+    void addCheckout(Member person){
         //add a Member to the checkout list
-        this.checkout_list.add(person);
+        this.checkoutList.add(person);
     }
 
-    public void remove_checkout (Member person){
+    void removeCheckout(Member person){
         //remove a Member from the checkout list
-        this.checkout_list.remove(person);
+        this.checkoutList.remove(person);
     }
 
-    public ArrayList get_checkout (){
-        return this.checkout_list;
-    }
-
-    public boolean waitlist_sit(){
+    boolean sitWaitList(){
         //return the waitList situation of the Book
-        return (waitlist.size()<=0);
+        return (waitList.size()<=0);
     }
 
-    public boolean availability (){
+    boolean availability(){
         //check whether the Book is available, return true if available
-        int checkout_num = this.checkout_list.size();
-        return ((checkout_num < this.copies_avl)&&(this.copies_avl > 0));
+        int checkoutNum = this.checkoutList.size();
+        return ((checkoutNum < this.copiesAvl)&&(this.copiesAvl > 0));
     }
 }

@@ -5,16 +5,18 @@ import java.util.Scanner;
 
 public class Operation {
 
-    private ArrayList<Book> bookList;
-    private ArrayList<User> userList;
+    private ArrayList<Book> booklist;
+    private ArrayList<User> userlist;
+    private int count;
     private Book temp_book;
     private Member temp_user;
 
-    private Operation(){
+    public Operation(){
 
 
-        this.bookList = new ArrayList<>();
-        this.userList = new ArrayList<>();
+        this.booklist = new ArrayList<>();
+        this.userlist = new ArrayList<>();
+        this.count = 0;
 
         login();
 
@@ -47,14 +49,14 @@ public class Operation {
     }
 
     private void staff_login(){
-        //Staff login
+        //staff login
         System.out.println("Please enter your username and password...");
         Scanner scan = new Scanner(System.in);
         System.out.println("username...");
         String username_scan = scan.next();
-        boolean existence = check_account(username_scan,"Staff");
+        boolean existence = check_account(username_scan,"staff");
         if (!existence){
-            create_account(username_scan, "Staff");
+            create_account(username_scan, "staff");
         }
         login();
     }
@@ -82,7 +84,7 @@ public class Operation {
         System.out.println("No...2");
         int choice = scan.nextInt();
         if (choice == 1) {
-            if (user_type.equals("Staff")){
+            if (user_type.equals("staff")){
                 User new_user = new User(username_scan);
                 set_password(new_user, user_type);
                 staff_menu();
@@ -103,14 +105,14 @@ public class Operation {
         new_user.set_key(password_scan);
         new_user.set_type(user_type);
         System.out.println("Successfully login...");
-        this.userList.add(new_user);
+        this.userlist.add(new_user);
     }
 
     private boolean check_account(String username_scan, String user_type){
         //helper function for check the account, return true if the account exist
         Scanner scan = new Scanner(System.in);
         boolean existence = false;
-        for (User user_listed : this.userList){
+        for (User user_listed : this.userlist){
             if (user_listed.username.equals(username_scan)){
                 if (!user_listed.user_type.equals(user_type)){
                     System.out.println("Wrong User type, please re-enter.");
@@ -126,7 +128,7 @@ public class Operation {
                     }else{
                         System.out.println("Successfully login...");
                         existence = true;
-                        if (user_type.equals("Staff")){
+                        if (user_type.equals("staff")){
                             staff_menu();
                             break;
                         } else {
@@ -142,10 +144,10 @@ public class Operation {
     }
 
     private void staff_menu(){
-        //menu for Staff
+        //menu for staff
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Welcome to Staff menu...");
+        System.out.println("Welcome to staff menu...");
         System.out.println("Add Book...1");
         System.out.println("Update Book...2");
         System.out.println("Pay penalties...3");
@@ -176,7 +178,7 @@ public class Operation {
         System.out.println("Request Book...1");
         System.out.println("Return Book...2");
         System.out.println("Extend date...3");
-        System.out.println("Remove waitList...4");
+        System.out.println("Remove waitlist...4");
         System.out.println("Exit...5");
 
         while (true){
@@ -197,7 +199,7 @@ public class Operation {
     }
 
     private void add_book(){
-        //Staff only, add Book to Book list
+        //staff only, add Book to Book list
         System.out.println("Add Book...");
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
@@ -207,7 +209,7 @@ public class Operation {
         update_description(new_book);
         update_copies(new_book);
         update_location(new_book);
-        this.bookList.add(new_book);
+        this.booklist.add(new_book);
 
         System.out.println("Do you want to add another Book?");
         yes_no();
@@ -221,8 +223,8 @@ public class Operation {
 
     private boolean search_book(String book_title){
         //search for a certain Book of book_title, return true if exists
-        for (Book books : this.bookList){
-            String title = books.get_title();
+        for (Book books : this.booklist){
+            String title = books.getTitle();
             if (title.equals(book_title)){
                 this.temp_book = books;
                 return true;
@@ -232,7 +234,7 @@ public class Operation {
     }
 
     private void update_book(){
-        //Staff only, update certain Book information
+        //staff only, update certain Book information
         System.out.println("Update Book...");
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
@@ -252,7 +254,7 @@ public class Operation {
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book title...");
         String book_title = scan.next();
-        book_u.alt_title(book_title);
+        book_u.setTitle(book_title);
     }
 
     private void update_description(Book book_u){
@@ -260,7 +262,7 @@ public class Operation {
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book description...");
         String book_description = scan.next();
-        book_u.alt_description(book_description);
+        book_u.setDescription(book_description);
     }
 
     private void update_copies(Book book_u){
@@ -268,7 +270,7 @@ public class Operation {
         System.out.println("Please enter the copies available...");
         System.out.println("Please enter integer");
         int new_copies = scan.nextInt();
-        book_u.alt_copies_avl(new_copies);
+        book_u.setCopiesAvl(new_copies);
     }
 
     private void update_location(Book book_u){
@@ -276,11 +278,11 @@ public class Operation {
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book location...");
         String book_location = scan.next();
-        book_u.alt_location(book_location);
+        book_u.setLocation(book_location);
     }
 
     private void update_info(Book book_update){
-        //Staff only, update further information for a Book
+        //staff only, update further information for a Book
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Update Book "+book_update.title);
@@ -294,25 +296,25 @@ public class Operation {
         switch (choice){
             case 1:
                 //update title
-                System.out.println("Current title : "+book_update.get_title());
+                System.out.println("Current title : "+book_update.getTitle());
                 update_title(book_update);
                 update_info(book_update);
                 break;
             case 2:
                 //update description
-                System.out.println("Current description : "+book_update.get_description());
+                System.out.println("Current description : "+book_update.getDescription());
                 update_description(book_update);
                 update_info(book_update);
                 break;
             case 3:
                 //update copies
-                System.out.println("Current copies available : "+book_update.get_copies_avl());
+                System.out.println("Current copies available : "+book_update.getCopiesAvl());
                 update_copies(book_update);
                 update_info(book_update);
                 break;
             case 4:
                 //update location
-                System.out.println("Current branch location : "+book_update.get_location());
+                System.out.println("Current branch location : "+book_update.getLocation());
                 update_location(book_update);
                 update_info(book_update);
             case 5:
@@ -344,7 +346,7 @@ public class Operation {
     }
 
     private void operate_book(Book book_o){
-        //checkout or waitList the Book
+        //checkout or waitlist the Book
         if (book_o.availability()){
             checkout_book(book_o);
         }else {
@@ -361,7 +363,7 @@ public class Operation {
         yes_no();
         int choice = scan.nextInt();
         if (choice == 1) {
-            book_c.add_checkout(user_c);
+            book_c.addCheckout(user_c);
             user_c.setCheckout(book_c, new Days());
             System.out.println("Successfully checkout");
             member_memu();
@@ -375,13 +377,13 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         Member user_w = this.temp_user;
-        System.out.println("The Book is unavailable, do you want to join the waitList");
+        System.out.println("The Book is unavailable, do you want to join the waitlist");
         yes_no();
         int choice = scan.nextInt();
         if (choice == 1) {
-            book_w.add_waitlist(user_w);
-            user_w.setWaitList(book_w);
-            System.out.println("Successfully waitList");
+            book_w.addWaitList(user_w);
+            user_w.setWaitlist(book_w);
+            System.out.println("Successfully waitlist");
             member_memu();
         } else {
             member_memu();
@@ -407,7 +409,7 @@ public class Operation {
         //search checklist
         Member user_s = this.temp_user;
         for (Tuple info : user_s.checkout){
-            String title = info.rent_book.get_title();
+            String title = info.rent_book.getTitle();
             if (title.equals(bookTitle)){
                 return true;
             }
@@ -418,8 +420,8 @@ public class Operation {
     private void return_book_helper(Book book_r){
         Member user_r = this.temp_user;
         for (Tuple book_c : this.temp_user.checkout){
-            book_c.rent_book.remove_checkout(user_r);
-            user_r.removeCheckout(book_r);
+            book_c.rent_book.removeCheckout(user_r);
+            user_r.remove_checkout(book_r);
             System.out.println("Successfully returned");
             member_memu();
         }
@@ -442,7 +444,7 @@ public class Operation {
     private void extend_date_helper(Book book_e){
         for (Tuple book_c : this.temp_user.checkout){
             if (book_e.equals(book_c.rent_book)){
-                boolean waitlist_sit = book_e.waitlist_sit();
+                boolean waitlist_sit = book_e.sitWaitList();
                 if (book_c.dates.extension(waitlist_sit)){
                     System.out.println("Successfully extended");
                     member_memu();
@@ -460,9 +462,9 @@ public class Operation {
         System.out.println("Pay penalty for members...");
         System.out.println("Please enter the username...");
         String username =  scan.next();
-        for (User user_p : this.userList){
+        for (User user_p : this.userlist){
             if (user_p.username.equals(username)){
-                if (user_p.user_type.equals("Staff")){
+                if (user_p.user_type.equals("staff")){
                     System.out.println("Wrong User type, please re-enter");
                     staff_menu();
                     break;
@@ -484,11 +486,11 @@ public class Operation {
     }
 
     private void member_waitlist(){
-        //return the waitList availability
+        //return the waitlist availability
         System.out.println("Waitlist Book availability list: ");
-        for (Book book_w : this.temp_user.waitList){
+        for (Book book_w : this.temp_user.waitlist){
             String available = available(book_w);
-            System.out.println(book_w.get_title()+available);
+            System.out.println(book_w.getTitle()+available);
         }
     }
 
@@ -503,7 +505,7 @@ public class Operation {
 
     private void member_penalty(){
         //calculate and show penalty of the User
-        this.temp_user.calPenalty();
+        this.temp_user.cal_penalty();
         double penalty = this.temp_user.getPenalty();
         System.out.println("Your penalty is : $"+penalty);
     }
@@ -523,20 +525,20 @@ public class Operation {
     }
 
     private void remove_waitlist(){
-        //remove from waitList
+        //remove from waitlist
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         Member user_w = this.temp_user;
-        System.out.println("Please enter the Book you want to remove from waitList");
+        System.out.println("Please enter the Book you want to remove from waitlist");
         String book_title = scan.next();
         if (waitlistSearch(book_title)){
             Book book_w = this.temp_book;
             yes_no();
             int choice = scan.nextInt();
             if (choice == 1) {
-                book_w.remove_waitlist(user_w);
-                user_w.removeWaitList(book_w);
-                System.out.println("Successfully removed from waitList");
+                book_w.removeWaitList(user_w);
+                user_w.remove_waitlist(book_w);
+                System.out.println("Successfully removed from waitlist");
                 member_memu();
             } else {
                 member_memu();
@@ -549,8 +551,8 @@ public class Operation {
 
     private boolean waitlistSearch (String bookTitle){
         Member user_s = this.temp_user;
-        for (Book books : user_s.waitList){
-            String title = books.get_title();
+        for (Book books : user_s.waitlist){
+            String title = books.getTitle();
             if (title.equals(bookTitle)){
                 return true;
             }
