@@ -29,8 +29,8 @@ public class Member extends User {
     void cal_penalty (){
         //calculate penalty
         for (Tuple info : this.checkout){
-            int days_past = info.dates.get_days_past();
-            int days_checkout =  info.dates.checkout_days;
+            int days_past = info.dates.getDaysPast();
+            int days_checkout =  info.dates.checkoutLimit;
             int days_due = days_past - days_checkout;
             if (days_due >= 0){
                 this.penalty = this.penalty + (days_due * 0.5);
@@ -71,7 +71,7 @@ public class Member extends User {
     public ArrayList<String> book_within(){
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
-            int days_due = info.dates.checkout_days - info.dates.get_days_past();
+            int days_due = info.dates.checkoutLimit - info.dates.getDaysPast();
             if ((days_due <= 2)&&(days_due >=0)){
                 String title = info.rent_book.getTitle();
                 books.add(title);
@@ -83,7 +83,7 @@ public class Member extends User {
     public ArrayList<String> book_due(){
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
-            int days_due = info.dates.checkout_days - info.dates.get_days_past();
+            int days_due = info.dates.checkoutLimit - info.dates.getDaysPast();
             if (days_due < 0){
                 String title = info.rent_book.getTitle();
                 books.add(title);
