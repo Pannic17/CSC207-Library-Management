@@ -54,12 +54,12 @@ public class Book {
     }
 
     public void add_waitlist (Member person){
-        //add a Member to the waitlist
+        //add a Member to the waitList
         this.waitlist.add(person);
     }
 
     public void remove_waitlist (Member person){
-        //remove a Member from the waitlist
+        //remove a Member from the waitList
         this.waitlist.remove(person);
     }
 
@@ -82,7 +82,7 @@ public class Book {
     }
 
     public boolean waitlist_sit(){
-        //return the waitlist situation of the Book
+        //return the waitList situation of the Book
         return (waitlist.size()<=0);
     }
 

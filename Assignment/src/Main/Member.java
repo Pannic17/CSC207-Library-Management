@@ -2,31 +2,31 @@ package Main;
 
 import java.util.ArrayList;
 
-public class Member extends User {
+class Member extends User {
 
     ArrayList<Tuple> checkout;
-    ArrayList<Book> waitlist;
+    ArrayList<Book> waitList;
     private double penalty;
 
     Member(String username){
 
         super(username);
         this.checkout = new ArrayList<>();
-        this.waitlist = new ArrayList<>();
+        this.waitList = new ArrayList<>();
     }
 
-    void setCheckout (Book rent_book, Days date){
+    void setCheckout (Book rentBook, Days date){
         //add Book to the checkout list
-        Tuple checkout_info = new Tuple(rent_book, date);
-        this.checkout.add(checkout_info);
+        Tuple checkoutInfo = new Tuple(rentBook, date);
+        this.checkout.add(checkoutInfo);
     }
 
-    void setWaitlist (Book waitlist_book){
-        //add Book to the waitlist list
-        this.waitlist.add(waitlist_book);
+    void setWaitList(Book waitListBook){
+        //add Book to the waitList list
+        this.waitList.add(waitListBook);
     }
 
-    void cal_penalty (){
+    void calPenalty(){
         //calculate penalty
         for (Tuple info : this.checkout){
             int days_past = info.dates.get_days_past();
@@ -44,13 +44,13 @@ public class Member extends User {
     }
 
 
-    void remove_checkout (Book book_title){
+    void removeCheckout(Book book_title){
         //remove Book from checkout list
-        Tuple temp = remove_checkout_helper(book_title);
+        Tuple temp = removeCheckoutHelper(book_title);
         this.checkout.remove(temp);
     }
 
-    private Tuple remove_checkout_helper (Book book_title){
+    private Tuple removeCheckoutHelper(Book book_title){
         for (Tuple info : this.checkout){
             if (info.rent_book.equals(book_title)){
                 return info;
@@ -59,16 +59,16 @@ public class Member extends User {
         return null;
     }
 
-    void remove_waitlist (Book book_title){
-        //remove Book from waitlist
-        this.waitlist.remove(book_title);
+    void removeWaitList(Book book_title){
+        //remove Book from waitList
+        this.waitList.remove(book_title);
     }
 
     void pay_penalty (){
         this.penalty = 0;
     }
 
-    public ArrayList<String> book_within(){
+    ArrayList<String> book_within(){
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
             int days_due = info.dates.checkout_days - info.dates.get_days_past();
@@ -80,7 +80,7 @@ public class Member extends User {
         return books;
     }
 
-    public ArrayList<String> book_due(){
+    ArrayList<String> book_due(){
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
             int days_due = info.dates.checkout_days - info.dates.get_days_past();
