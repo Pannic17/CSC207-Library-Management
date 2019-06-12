@@ -1,36 +1,36 @@
 package Main;
 
 public class User {
-    public String username;
-    public String password;
-    public String user_type;
+    String userName;
+    private String password;
+    String userType;
 
-    public User(String username){
+    User(String userName){
 
-        this.username = username;
+        this.userName = userName;
     }
 
-    public void set_key (String key){
+    void setKey(String key){
         //set key for Main.User
         this.password = key;
     }
 
-    public void set_type (String type){
+    void setType(String type){
         //set User type for User, can only be "staff" or "Member"
         if (type.equals("staff")||type.equals("Member")){
-            this.user_type = type;
+            this.userType = type;
         }else{
-            this.user_type = "null";
+            this.userType = "null";
         }
     }
 
-    public boolean check_key (String key_enter){
+    boolean checkKey(String key){
         //return true if the input password is matched
-        return  (key_enter.equals(this.password));
+        return  (key.equals(this.password));
     }
 
-    public String get_type (){
+    public String getType(){
         //return Main.User type for Main.User, can only be "staff" or "Member"
-        return this.user_type;
+        return this.userType;
     }
 }

@@ -48,9 +48,9 @@ public class Operation {
 
     private void staffLogin(){
         //staff login
-        System.out.println("Please enter your username and password...");
+        System.out.println("Please enter your userName and password...");
         Scanner scan = new Scanner(System.in);
-        System.out.println("username...");
+        System.out.println("userName...");
         String userName = scan.next();
         boolean existence = checkAccount(userName,"staff");
         if (!existence){
@@ -63,9 +63,9 @@ public class Operation {
 
     private void memberLogin(){
         //Member login
-        System.out.println("Please enter your username and password...");
+        System.out.println("Please enter your userName and password...");
         Scanner scan = new Scanner(System.in);
-        System.out.println("username...");
+        System.out.println("userName...");
         String userName = scan.next();
         boolean existence = checkAccount(userName, "Member");
         if (!existence){
@@ -100,8 +100,8 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please set your password...");
         String password_scan = scan.next();
-        new_user.set_key(password_scan);
-        new_user.set_type(user_type);
+        new_user.setKey(password_scan);
+        new_user.setType(user_type);
         System.out.println("Successfully login...");
         this.userList.add(new_user);
     }
@@ -111,15 +111,15 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         boolean existence = false;
         for (User user_listed : this.userList){
-            if (user_listed.username.equals(username_scan)){
-                if (!user_listed.user_type.equals(user_type)){
+            if (user_listed.userName.equals(username_scan)){
+                if (!user_listed.userType.equals(user_type)){
                     System.out.println("Wrong User type, please re-enter.");
                     login();
                     break;
                 }else{
                     System.out.println("password...");
                     String password_scan = scan.next();
-                    if (!user_listed.check_key(password_scan)){
+                    if (!user_listed.checkKey(password_scan)){
                         System.out.println("Wrong password, please re-enter.");
                         login();
                         break;
@@ -458,11 +458,11 @@ public class Operation {
         //pay penalty for a certain Member
         Scanner scan = new Scanner(System.in);
         System.out.println("Pay penalty for members...");
-        System.out.println("Please enter the username...");
+        System.out.println("Please enter the userName...");
         String username =  scan.next();
         for (User user_p : this.userList){
-            if (user_p.username.equals(username)){
-                if (user_p.user_type.equals("staff")){
+            if (user_p.userName.equals(username)){
+                if (user_p.userType.equals("staff")){
                     System.out.println("Wrong User type, please re-enter");
                     staff_menu();
                     break;
