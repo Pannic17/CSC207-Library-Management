@@ -69,6 +69,7 @@ class Member extends User {
     }
 
     ArrayList<String> bookWithin(){
+        //search for book that is 2 days to due
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
             int daysDue = info.dates.checkoutLimit - info.dates.getDaysPast();
@@ -81,6 +82,7 @@ class Member extends User {
     }
 
     ArrayList<String> bookDue(){
+        //search for book that has already due
         ArrayList<String> books = new ArrayList<>();
         for (Tuple info : this.checkout){
             int daysDue = info.dates.checkoutLimit - info.dates.getDaysPast();
