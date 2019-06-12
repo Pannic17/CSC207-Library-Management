@@ -89,11 +89,11 @@ public class Operation {
                 staffMenu();
             }else {
                 //create a member account and enter member menu
-                User new_user = new Member(userName);
-                setPassword(new_user, userType);
+                User newUser = new Member(userName);
+                setPassword(newUser, userType);
                 //cast must not be removed as this only run when user types is "member"
                 //the cast warning can be ignored
-                this.tempUser = (Member) new_user;
+                this.tempUser = (Member) newUser;
                 memberMemu();
             }
         }
@@ -176,7 +176,9 @@ public class Operation {
         //menu for Member
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Member menu...");
-        member_info();
+        //show member information
+        memberInfo();
+        //print out member menu
         System.out.println("Request Book...1");
         System.out.println("Return Book...2");
         System.out.println("Extend date...3");
@@ -191,10 +193,10 @@ public class Operation {
                 break;
             }
             switch (choice){
-                case 1: request_book(); break;
-                case 2: return_book(); break;
-                case 3: extend_date(); break;
-                case 4: remove_waitlist(); break;
+                case 1: requestBook(); break;
+                case 2: returnBook(); break;
+                case 3: extendDate(); break;
+                case 4: removeWaitList(); break;
                 default: System.out.println("Error"); staffMenu();
             }
         }
@@ -206,15 +208,17 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Please enter Book title...");
-        String book_title = scan.next();
-        Book new_book = new Book(book_title);
-        update_description(new_book);
-        update_copies(new_book);
-        update_location(new_book);
-        this.bookList.add(new_book);
+        String bookTitle = scan.next();
+        Book newBook = new Book(bookTitle);
+        updateDescription(newBook);
+        updateCopies(newBook);
+        updateLocation(newBook);
+        this.bookList.add(newBook);
+        //end of add
 
+        //ask for return or add a new one
         System.out.println("Do you want to add another Book?");
-        yes_no();
+        menuBiChoice();
         int choice = scan.nextInt();
         if (choice == 1) {
             addBook();
@@ -223,11 +227,11 @@ public class Operation {
         }
     }
 
-    private boolean search_book(String book_title){
+    private boolean searchBookList(String bookTitle){
         //search for a certain Book of book_title, return true if exists
         for (Book books : this.bookList){
             String title = books.getTitle();
-            if (title.equals(book_title)){
+            if (title.equals(bookTitle)){
                 this.tempBook = books;
                 return true;
             }
@@ -241,9 +245,9 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book title...");
-        String book_title = scan.next();
-        if (search_book(book_title)){
-            update_info(this.tempBook);
+        String bookTitle = scan.next();
+        if (searchBookList(bookTitle)){
+            updateInfo(this.tempBook);
         }else {
             System.out.println("No Book of this title found...");
             System.out.println("Return to stuff menu...");
@@ -251,43 +255,47 @@ public class Operation {
         }
     }
 
-    private void update_title(Book book_u){
+    private void updateTitle(Book bookUpdate){
+        //staff only, update book title
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book title...");
-        String book_title = scan.next();
-        book_u.setTitle(book_title);
+        String bookTitle = scan.next();
+        bookUpdate.setTitle(bookTitle);
     }
 
-    private void update_description(Book book_u){
+    private void updateDescription(Book bookUpdate){
+        //staff only, update book description
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book description...");
-        String book_description = scan.next();
-        book_u.setDescription(book_description);
+        String bookDescription = scan.next();
+        bookUpdate.setDescription(bookDescription);
     }
 
-    private void update_copies(Book book_u){
+    private void updateCopies(Book bookUpdate){
+        //staff only, update copies
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter the copies available...");
         System.out.println("Please enter integer");
-        int new_copies = scan.nextInt();
-        book_u.setCopiesAvl(new_copies);
+        int newCopies = scan.nextInt();
+        bookUpdate.setCopiesAvl(newCopies);
     }
 
-    private void update_location(Book book_u){
+    private void updateLocation(Book bookUpdate){
+        //staff only, update location
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Please enter the Book location...");
-        String book_location = scan.next();
-        book_u.setLocation(book_location);
+        String bookLocation = scan.next();
+        bookUpdate.setLocation(bookLocation);
     }
 
-    private void update_info(Book book_update){
+    private void updateInfo(Book bookUpdate){
         //staff only, update further information for a Book
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
-        System.out.println("Update Book "+book_update.title);
+        System.out.println("Update Book "+bookUpdate.title);
         System.out.println("Please select the field you want to update...");
         System.out.println("Book title...1");
         System.out.println("Book description...2");
@@ -298,27 +306,27 @@ public class Operation {
         switch (choice){
             case 1:
                 //update title
-                System.out.println("Current title : "+book_update.getTitle());
-                update_title(book_update);
-                update_info(book_update);
+                System.out.println("Current title : "+bookUpdate.getTitle());
+                updateTitle(bookUpdate);
+                updateInfo(bookUpdate);
                 break;
             case 2:
                 //update description
-                System.out.println("Current description : "+book_update.getDescription());
-                update_description(book_update);
-                update_info(book_update);
+                System.out.println("Current description : "+bookUpdate.getDescription());
+                updateDescription(bookUpdate);
+                updateInfo(bookUpdate);
                 break;
             case 3:
                 //update copies
-                System.out.println("Current copies available : "+book_update.getCopiesAvl());
-                update_copies(book_update);
-                update_info(book_update);
+                System.out.println("Current copies available : "+bookUpdate.getCopiesAvl());
+                updateCopies(bookUpdate);
+                updateInfo(bookUpdate);
                 break;
             case 4:
                 //update location
-                System.out.println("Current branch location : "+book_update.getLocation());
-                update_location(book_update);
-                update_info(book_update);
+                System.out.println("Current branch location : "+bookUpdate.getLocation());
+                updateLocation(bookUpdate);
+                updateInfo(bookUpdate);
             case 5:
                 staffMenu();
             default: System.out.println("Error"); staffMenu();
@@ -326,47 +334,47 @@ public class Operation {
         }
     }
 
-    private void yes_no(){
+    private void menuBiChoice(){
         //yes no menu
         System.out.println("Yes...1");
         System.out.println("No...2");
     }
 
-    private void request_book(){
+    private void requestBook(){
         //Member only, request a Book
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Search for the Book...");
-        String book_title = scan.next();
-        if (search_book(book_title)){
-            System.out.println("Found Book "+book_title);
-            operate_book(this.tempBook);
+        String bookTitle = scan.next();
+        if (searchBookList(bookTitle)){
+            System.out.println("Found Book "+bookTitle);
+            operateBook(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
             memberMemu();
         }
     }
 
-    private void operate_book(Book book_o){
+    private void operateBook(Book book){
         //checkout or waitList the Book
-        if (book_o.availability()){
-            checkout_book(book_o);
+        if (book.availability()){
+            checkoutBook(book);
         }else {
-            waitlist_book(book_o);
+            waitListBook(book);
         }
     }
 
-    private void checkout_book(Book book_c){
+    private void checkoutBook(Book book){
         //checkout the Book
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
-        Member user_c = this.tempUser;
+        Member user = this.tempUser;
         System.out.println("The Book is available, do you want to checkout the Book");
-        yes_no();
+        menuBiChoice();
         int choice = scan.nextInt();
         if (choice == 1) {
-            book_c.addCheckout(user_c);
-            user_c.setCheckout(book_c, new Days());
+            book.addCheckout(user);
+            user.setCheckout(book, new Days());
             System.out.println("Successfully checkout");
             memberMemu();
         }else {
@@ -375,16 +383,17 @@ public class Operation {
 
     }
 
-    private void waitlist_book(Book book_w){
+    private void waitListBook(Book book){
+        //add a book to wait list
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
-        Member user_w = this.tempUser;
+        Member user = this.tempUser;
         System.out.println("The Book is unavailable, do you want to join the waitList");
-        yes_no();
+        menuBiChoice();
         int choice = scan.nextInt();
         if (choice == 1) {
-            book_w.addWaitList(user_w);
-            user_w.setWaitList(book_w);
+            book.addWaitList(user);
+            user.setWaitList(book);
             System.out.println("Successfully waitList");
             memberMemu();
         } else {
@@ -392,15 +401,15 @@ public class Operation {
         }
     }
 
-    private void return_book(){
+    private void returnBook(){
         //return the Book
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Search for the Book...");
-        String book_title = scan.next();
-        if (returnSearch(book_title)){
-            System.out.println("Found Book "+book_title);
-            return_book_helper(this.tempBook);
+        String bookTitle = scan.next();
+        if (returnSearch(bookTitle)){
+            System.out.println("Found Book "+bookTitle);
+            returnBookHelper(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
             memberMemu();
@@ -408,9 +417,9 @@ public class Operation {
     }
 
     private boolean returnSearch(String bookTitle){
-        //search checklist
-        Member user_s = this.tempUser;
-        for (Tuple info : user_s.checkout){
+        //search checklist, return true if found the book in checklist
+        Member user = this.tempUser;
+        for (Tuple info : user.checkout){
             String title = info.book.getTitle();
             if (title.equals(bookTitle)){
                 return true;
@@ -419,35 +428,38 @@ public class Operation {
         return false;
     }
 
-    private void return_book_helper(Book book_r){
-        Member user_r = this.tempUser;
-        for (Tuple book_c : this.tempUser.checkout){
-            book_c.book.removeCheckout(user_r);
-            user_r.removeCheckout(book_r);
+    private void returnBookHelper(Book book){
+        //helper function for return book
+        Member user = this.tempUser;
+        for (Tuple bookCheckout : this.tempUser.checkout){
+            bookCheckout.book.removeCheckout(user);
+            user.removeCheckout(book);
             System.out.println("Successfully returned");
             memberMemu();
         }
     }
 
-    private void extend_date(){
+    private void extendDate(){
+        //member only, extend the date 14 more days
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
         System.out.println("Search for the Book...");
-        String book_title = scan.next();
-        if (search_book(book_title)){
-            System.out.println("Found Book "+book_title);
-            extend_date_helper(this.tempBook);
+        String bookTitle = scan.next();
+        if (searchBookList(bookTitle)){
+            System.out.println("Found Book "+bookTitle);
+            extendDateHelper(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
             memberMemu();
         }
     }
 
-    private void extend_date_helper(Book book_e){
-        for (Tuple book_c : this.tempUser.checkout){
-            if (book_e.equals(book_c.book)){
-                boolean waitlist_sit = book_e.sitWaitList();
-                if (book_c.dates.extension(waitlist_sit)){
+    private void extendDateHelper(Book book){
+        //helper function for extend date
+        for (Tuple bookCheckout : this.tempUser.checkout){
+            if (book.equals(bookCheckout.book)){
+                boolean sitWaitList = book.sitWaitList();
+                if (bookCheckout.dates.extension(sitWaitList)){
                     System.out.println("Successfully extended");
                     memberMemu();
                 }else {
@@ -464,15 +476,15 @@ public class Operation {
         System.out.println("Pay penalty for members...");
         System.out.println("Please enter the userName...");
         String username =  scan.next();
-        for (User user_p : this.userList){
-            if (user_p.userName.equals(username)){
-                if (user_p.userType.equals("staff")){
+        for (User userListed : this.userList){
+            if (userListed.userName.equals(username)){
+                if (userListed.userType.equals("staff")){
                     System.out.println("Wrong User type, please re-enter");
                     staffMenu();
                     break;
                 }else {
-                    Member user_m = (Member) user_p;
-                    user_m.payPenalty();
+                    Member userMember = (Member) userListed;
+                    userMember.payPenalty();
                     System.out.println("Successfully paid the penalty");
                     staffMenu();
                 }
@@ -480,66 +492,66 @@ public class Operation {
         }
     }
 
-    private void member_info(){
+    private void memberInfo(){
         //show Member info when the Member login
-        member_waitlist();
-        member_penalty();
-        member_due();
+        memberWaitList();
+        memberPenalty();
+        memberDue();
     }
 
-    private void member_waitlist(){
+    private void memberWaitList(){
         //return the waitList availability
-        System.out.println("Waitlist Book availability list: ");
-        for (Book book_w : this.tempUser.waitList){
-            String available = available(book_w);
-            System.out.println(book_w.getTitle()+available);
+        System.out.println("Wait list Book availability list: ");
+        for (Book book : this.tempUser.waitList){
+            String available = available(book);
+            System.out.println(book.getTitle()+available);
         }
     }
 
-    private String available(Book book_a){
+    private String available(Book book){
         //return Book availability
-        if (book_a.availability()){
+        if (book.availability()){
             return  "Available";
         }else {
             return  "Unavailable";
         }
     }
 
-    private void member_penalty(){
+    private void memberPenalty(){
         //calculate and show penalty of the User
         this.tempUser.calPenalty();
         double penalty = this.tempUser.getPenalty();
         System.out.println("Your penalty is : $"+penalty);
     }
 
-    private void member_due(){
+    private void memberDue(){
         //show a message of Book due
         System.out.println("These books are due within next 2 Days:");
         ArrayList<String> within = this.tempUser.bookWithin();
-        for (String book_title : within){
-            System.out.println(book_title);
+        for (String bookTitle : within){
+            System.out.println(bookTitle);
         }
         System.out.println("These books have already past due:");
         ArrayList<String> due = this.tempUser.bookDue();
-        for (String book_title : due){
-            System.out.println(book_title);
+        for (String bookTitle : due){
+            System.out.println(bookTitle);
         }
     }
 
-    private void remove_waitlist(){
+    private void removeWaitList(){
         //remove from waitList
         Scanner scan = new Scanner(System.in);
         scan.useDelimiter("\n");
-        Member user_w = this.tempUser;
+        Member user = this.tempUser;
         System.out.println("Please enter the Book you want to remove from waitList");
         String book_title = scan.next();
-        if (waitlistSearch(book_title)){
-            Book book_w = this.tempBook;
-            yes_no();
+        if (waitListSearch(book_title)){
+            Book book = this.tempBook;
+            menuBiChoice();
             int choice = scan.nextInt();
             if (choice == 1) {
-                book_w.removeWaitList(user_w);
-                user_w.removeWaitList(book_w);
+                book.removeWaitList(user);
+                user.removeWaitList(book);
                 System.out.println("Successfully removed from waitList");
                 memberMemu();
             } else {
@@ -551,9 +563,10 @@ public class Operation {
         }
     }
 
-    private boolean waitlistSearch (String bookTitle){
-        Member user_s = this.tempUser;
-        for (Book books : user_s.waitList){
+    private boolean waitListSearch(String bookTitle){
+        //search book in the wait list, return true if found the book
+        Member user = this.tempUser;
+        for (Book books : user.waitList){
             String title = books.getTitle();
             if (title.equals(bookTitle)){
                 return true;
@@ -564,6 +577,7 @@ public class Operation {
 
     public static void main(String[] args) {
 
+        //run the function
         new Operation();
     }
 
