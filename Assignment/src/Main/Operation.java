@@ -67,9 +67,9 @@ public class Operation {
         Scanner scan = new Scanner(System.in);
         System.out.println("userName...");
         String userName = scan.next();
-        boolean existence = checkAccount(userName, "Member");
+        boolean existence = checkAccount(userName, "member");
         if (!existence){
-            createAccount(userName, "Member");
+            createAccount(userName, "member");
         }
         login();
     }
@@ -83,55 +83,59 @@ public class Operation {
         int choice = scan.nextInt();
         if (choice == 1) {
             if (userType.equals("staff")){
+                //create a staff account and enter staff menu
                 User newUser = new User(userName);
                 setPassword(newUser, userType);
-                staff_menu();
+                staffMenu();
             }else {
+                //create a member account and enter member menu
                 User new_user = new Member(userName);
                 setPassword(new_user, userType);
+                //cast must not be removed as this only run when user types is "member"
+                //the cast warning can be ignored
                 this.tempUser = (Member) new_user;
-                member_memu();
+                memberMemu();
             }
         }
     }
 
-    private void setPassword(User new_user, String user_type){
+    private void setPassword(User newUser, String userType){
         //set password, helper function
         Scanner scan = new Scanner(System.in);
         System.out.println("Please set your password...");
-        String password_scan = scan.next();
-        new_user.setKey(password_scan);
-        new_user.setType(user_type);
+        String passwordScan = scan.next();
+        newUser.setKey(passwordScan);
+        newUser.setType(userType);
         System.out.println("Successfully login...");
-        this.userList.add(new_user);
+        this.userList.add(newUser);
     }
 
-    private boolean checkAccount(String username_scan, String user_type){
+    private boolean checkAccount(String userNameScan, String userType){
         //helper function for check the account, return true if the account exist
         Scanner scan = new Scanner(System.in);
         boolean existence = false;
-        for (User user_listed : this.userList){
-            if (user_listed.userName.equals(username_scan)){
-                if (!user_listed.userType.equals(user_type)){
+        for (User users : this.userList){
+            if (users.userName.equals(userNameScan)){
+                if (!users.userType.equals(userType)){
                     System.out.println("Wrong User type, please re-enter.");
                     login();
                     break;
                 }else{
                     System.out.println("password...");
-                    String password_scan = scan.next();
-                    if (!user_listed.checkKey(password_scan)){
+                    String passwordScan = scan.next();
+                    if (!users.checkKey(passwordScan)){
                         System.out.println("Wrong password, please re-enter.");
                         login();
                         break;
                     }else{
                         System.out.println("Successfully login...");
                         existence = true;
-                        if (user_type.equals("staff")){
-                            staff_menu();
+                        if (userType.equals("staff")){
+                            staffMenu();
                             break;
                         } else {
-                            this.tempUser = (Member) user_listed;
-                            member_memu();
+                            this.tempUser = (Member) users;
+                            memberMemu();
                             break;
                         }
                     }
@@ -141,7 +145,7 @@ public class Operation {
         return existence;
     }
 
-    private void staff_menu(){
+    private void staffMenu(){
         //menu for staff
         Scanner scan = new Scanner(System.in);
 
@@ -159,16 +163,16 @@ public class Operation {
                 break;
             }
             switch (choice){
-                case 1: add_book(); break;
-                case 2: update_book(); break;
-                case 3: pay_penalty_s(); break;
-                default: System.out.println("Error"); staff_menu();
+                case 1: addBook(); break;
+                case 2: updateBook(); break;
+                case 3: payPenalty(); break;
+                default: System.out.println("Error"); staffMenu();
             }
         }
 
     }
 
-    private void member_memu(){
+    private void memberMemu(){
         //menu for Member
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Member menu...");
@@ -191,12 +195,12 @@ public class Operation {
                 case 2: return_book(); break;
                 case 3: extend_date(); break;
                 case 4: remove_waitlist(); break;
-                default: System.out.println("Error"); staff_menu();
+                default: System.out.println("Error"); staffMenu();
             }
         }
     }
 
-    private void add_book(){
+    private void addBook(){
         //staff only, add Book to Book list
         System.out.println("Add Book...");
         Scanner scan = new Scanner(System.in);
@@ -213,9 +217,9 @@ public class Operation {
         yes_no();
         int choice = scan.nextInt();
         if (choice == 1) {
-            add_book();
+            addBook();
         }else {
-            staff_menu();
+            staffMenu();
         }
     }
 
@@ -231,7 +235,7 @@ public class Operation {
         return false;
     }
 
-    private void update_book(){
+    private void updateBook(){
         //staff only, update certain Book information
         System.out.println("Update Book...");
         Scanner scan = new Scanner(System.in);
@@ -243,7 +247,7 @@ public class Operation {
         }else {
             System.out.println("No Book of this title found...");
             System.out.println("Return to stuff menu...");
-            staff_menu();
+            staffMenu();
         }
     }
 
@@ -316,8 +320,8 @@ public class Operation {
                 update_location(book_update);
                 update_info(book_update);
             case 5:
-                staff_menu();
-            default: System.out.println("Error"); staff_menu();
+                staffMenu();
+            default: System.out.println("Error"); staffMenu();
 
         }
     }
@@ -339,7 +343,7 @@ public class Operation {
             operate_book(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
-            member_memu();
+            memberMemu();
         }
     }
 
@@ -364,9 +368,9 @@ public class Operation {
             book_c.addCheckout(user_c);
             user_c.setCheckout(book_c, new Days());
             System.out.println("Successfully checkout");
-            member_memu();
+            memberMemu();
         }else {
-            member_memu();
+            memberMemu();
         }
 
     }
@@ -382,9 +386,9 @@ public class Operation {
             book_w.addWaitList(user_w);
             user_w.setWaitList(book_w);
             System.out.println("Successfully waitList");
-            member_memu();
+            memberMemu();
         } else {
-            member_memu();
+            memberMemu();
         }
     }
 
@@ -399,7 +403,7 @@ public class Operation {
             return_book_helper(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
-            member_memu();
+            memberMemu();
         }
     }
 
@@ -421,7 +425,7 @@ public class Operation {
             book_c.book.removeCheckout(user_r);
             user_r.removeCheckout(book_r);
             System.out.println("Successfully returned");
-            member_memu();
+            memberMemu();
         }
     }
 
@@ -435,7 +439,7 @@ public class Operation {
             extend_date_helper(this.tempBook);
         }else {
             System.out.println("Cannot find the Book.");
-            member_memu();
+            memberMemu();
         }
     }
 
@@ -445,16 +449,16 @@ public class Operation {
                 boolean waitlist_sit = book_e.sitWaitList();
                 if (book_c.dates.extension(waitlist_sit)){
                     System.out.println("Successfully extended");
-                    member_memu();
+                    memberMemu();
                 }else {
                     System.out.println("Fail to extend date");
-                    member_memu();
+                    memberMemu();
                 }
             }
         }
     }
 
-    private void pay_penalty_s(){
+    private void payPenalty(){
         //pay penalty for a certain Member
         Scanner scan = new Scanner(System.in);
         System.out.println("Pay penalty for members...");
@@ -464,13 +468,13 @@ public class Operation {
             if (user_p.userName.equals(username)){
                 if (user_p.userType.equals("staff")){
                     System.out.println("Wrong User type, please re-enter");
-                    staff_menu();
+                    staffMenu();
                     break;
                 }else {
                     Member user_m = (Member) user_p;
                     user_m.payPenalty();
                     System.out.println("Successfully paid the penalty");
-                    staff_menu();
+                    staffMenu();
                 }
             }
         }
@@ -537,13 +541,13 @@ public class Operation {
                 book_w.removeWaitList(user_w);
                 user_w.removeWaitList(book_w);
                 System.out.println("Successfully removed from waitList");
-                member_memu();
+                memberMemu();
             } else {
-                member_memu();
+                memberMemu();
             }
         }else {
             System.out.println("Cannot find the Book");
-            member_memu();
+            memberMemu();
         }
     }
 
