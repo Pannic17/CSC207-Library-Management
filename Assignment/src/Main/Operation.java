@@ -537,7 +537,7 @@ public class Operation {
             int choice = scan.nextInt();
             if (choice == 1) {
                 book_w.removeWaitList(user_w);
-                user_w.removeWaitlist(book_w);
+                user_w.removeWaitList(book_w);
                 System.out.println("Successfully removed from waitList");
                 member_memu();
             } else {

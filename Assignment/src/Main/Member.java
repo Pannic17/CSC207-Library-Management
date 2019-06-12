@@ -59,7 +59,7 @@ class Member extends User {
         return null;
     }
 
-    void removeWaitlist(Book book){
+    void removeWaitList(Book book){
         //remove Book from waitList
         this.waitList.remove(book);
     }
