@@ -8,15 +8,21 @@ class Days {
     private LocalDate localDate;
     private int daysPast;
     int checkoutLimit;
+    private LocalDate today;
 
     Days(){
         this.localDate = LocalDate.now();
         this.checkoutLimit = 14;
     }
 
+    void getToday(LocalDate systemTime){
+        //get today's date
+        this.today = systemTime;
+    }
+
     private void calDays(){
         //calculate days past
-        LocalDate today = LocalDate.now();
+        LocalDate today = this.today;
         long days = ChronoUnit.DAYS.between(this.localDate, today);
         this.daysPast = (int) days;
     }

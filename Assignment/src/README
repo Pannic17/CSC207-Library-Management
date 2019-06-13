@@ -12,3 +12,8 @@ if a staff account try to login as member, it cannot be a successful login
 for the same reason, you cannot create an account with existed username
 once you done one operation, the system will jump to user's menu for further instruction
 at user's menu, exit means log-out.
+
+#how to set time
+when user login in, there will be a set time option available
+enter year, month and day
+then successfully set the time

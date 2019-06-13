@@ -1,5 +1,6 @@
 package Main;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,13 +10,14 @@ public class Operation {
     private ArrayList<User> userList;
     private Book tempBook;
     private Member tempUser;
+    private LocalDate systemTime;
 
     private Operation(){
 
 
         this.bookList = new ArrayList<>();
         this.userList = new ArrayList<>();
-
+        this.systemTime = LocalDate.now();
         login();
 
 
@@ -154,6 +156,7 @@ public class Operation {
         System.out.println("Update Book...2");
         System.out.println("Pay penalties...3");
         System.out.println("Exit...4");
+        System.out.println("Set Time...5");
 
         while (true){
             int choice = scan.nextInt();
@@ -166,6 +169,10 @@ public class Operation {
                 case 1: addBook(); break;
                 case 2: updateBook(); break;
                 case 3: payPenalty(); break;
+                case 5:
+                    setTime();
+                    staffMenu();
+                    break;
                 default: System.out.println("Error"); staffMenu();
             }
         }
@@ -184,6 +191,7 @@ public class Operation {
         System.out.println("Extend date...3");
         System.out.println("Remove waitList...4");
         System.out.println("Exit...5");
+        System.out.println("Set Time...6");
 
         while (true){
             int choice = scan.nextInt();
@@ -197,9 +205,25 @@ public class Operation {
                 case 2: returnBook(); break;
                 case 3: extendDate(); break;
                 case 4: removeWaitList(); break;
-                default: System.out.println("Error"); staffMenu();
+                case 6:
+                    setTime();
+                    memberMemu();
+                    break;
+                default: System.out.println("Error"); memberMemu();
             }
         }
+    }
+
+    private void setTime(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please set today's date...");
+        System.out.println("Year...");
+        int year = scan.nextInt();
+        System.out.println("Month...");
+        int month = scan.nextInt();
+        System.out.println("Day...");
+        int day = scan.nextInt();
+        this.systemTime = LocalDate.of(year, month, day);
     }
 
     private void addBook(){
@@ -519,7 +543,7 @@ public class Operation {
 
     private void memberPenalty(){
         //calculate and show penalty of the User
-        this.tempUser.calPenalty();
+        this.tempUser.calPenalty(this.systemTime);
         double penalty = this.tempUser.getPenalty();
         System.out.println("Your penalty is : $"+penalty);
     }

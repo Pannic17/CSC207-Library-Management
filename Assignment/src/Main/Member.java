@@ -1,5 +1,6 @@
 package Main;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 class Member extends User {
@@ -26,9 +27,10 @@ class Member extends User {
         this.waitList.add(bookWaitList);
     }
 
-    void calPenalty(){
+    void calPenalty(LocalDate systemTime){
         //calculate penalty
         for (Tuple info : this.checkout){
+            info.dates.getToday(systemTime);
             int daysPast = info.dates.getDaysPast();
             int checkoutLimit =  info.dates.checkoutLimit;
             int daysDue = daysPast - checkoutLimit;
