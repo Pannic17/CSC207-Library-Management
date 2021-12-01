@@ -23,6 +23,4 @@ when user login in, there will be a set time option available
 enter year, month and day
 then successfully set the time
 
-panjian6
-Jiangyun Pan
 jiangyun.pan@mail.utoronto.ca
