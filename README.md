@@ -2,7 +2,7 @@
 CSC207 a1 library management system
 CSC207 2018 Summer term assignment 1, A text-based libaray manage system  
 
-The excutable file is ../src/main/Operation.java
+The excutable file is ../Assignement/src/main/Operation.java
 1. Run Operation.java
 2. And then follow the instructions
 3. When there is a menu, press the number with operation
